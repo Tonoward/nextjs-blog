@@ -3,6 +3,15 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
+import { navLinks } from '../lib/data'
+
+import React from 'react'
+
+const NavItem = ({ item }) => {
+  const router = useRouter();
+  return <>{router.pathname === "/" ? item : ""}</>;
+};
+
 
 const name = 'Tonoward'
 export const siteTitle = 'Test Blog'
@@ -28,46 +37,76 @@ export default function Layout({ children, home }) {
       <header className={styles.header}>
         {home ? (
           <>
+          {/* Navigation bar */}
+          <div className="brand">
+            <h3>Tw's Blog</h3>
             <Image
               priority
-              src="/images/profile.jpg"
+              src="/images/profile.gif"
               className={utilStyles.borderCircle}
-              height={144}
-              width={144}
+              height={100}
+              width={100}
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+          </div>
+          <nav>
+            {React.Children.toArray(
+            navLinks.map((link, index) => {
+            return (
+              <a className={styles.ulNav}>
+              <Link href={link.path}>
+                <li  key={index}>{link.name}</li>
+              </Link>
+              </a>
+            );
+            })
+            )}
+          </nav>
+          {/* End of navigation bar */}
+
+            
           </>
         ) : (
           <>
-            <Link href="/">
-              <a>
-                <Image
-                  priority
-                  src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
-                  height={108}
-                  width={108}
-                  alt={name}
-                />
-              </a>
-            </Link>
-            <h2 className={utilStyles.headingLg}>
-              <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
+          {/* Navigation bar */}
+          <div className="brand">
+            <h3>Tw's Blog</h3>
+            <Image
+              priority
+              src="/images/profile.gif"
+              className={utilStyles.borderCircle}
+              height={100}
+              width={100}
+              alt={name}
+            />
+          </div>
+          <nav>
+            {React.Children.toArray(
+            navLinks.map((link, index) => {
+            return (
+              <a className={styles.ulNav}>
+              <Link href={link.path}>
+                <li  key={index}>{link.name}</li>
               </Link>
-            </h2>
+              </a>
+            );
+            })
+            )}
+          </nav>
+          {/* End of navigation bar */}
+            
           </>
         )}
       </header>
       <main>{children}</main>
       {!home && (
         <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
+          <Link  href="javascript:history.back()">
+            <a>← Back</a>
           </Link>
         </div>
       )}
     </div>
   )
 }
+

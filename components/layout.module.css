@@ -13,3 +13,21 @@
   .backToHome {
     margin: 3rem 0 0;
   }
+
+
+  .ulNav {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    color: aliceblue;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    border-right: 30px solid #333;
+  }
+  
+
+  .active {
+    color: #04AA6D;
+  }
+  

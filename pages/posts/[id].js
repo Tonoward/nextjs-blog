@@ -1,41 +1,32 @@
 import Layout from '../../components/layout'
-import { getAllPostIds, getPostData } from '../../lib/posts'
 import Head from 'next/head'
-import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
+import Link from 'next/link'
+import {React, useState, useEffect } from 'react'
+import { app, database } from '../../firebaseConfig';
+import { Timestamp } from 'firebase/firestore'
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { useRouter } from "next/router";
+
+
+export default function Post({ postID }) {
+
+//Information and route of the FireStore Database
+const dbInstance = collection(database, 'blogEntries');
 
 
 
-export default function Post({ postData }) {
+
     return (
       <Layout>
         <Head>
-          <title>{postData.title}</title>
+          <title>hello{ /*postID.title*/}</title>
         </Head>
         <article>
-          <h1 className={utilStyles.headingXl}>{postData.title}</h1>
+          <h1 className={utilStyles.headingXl}>hello{ /*postID.title*/}</h1>
           <div className={utilStyles.lightText}>
-            <Date dateString={postData.date} />
           </div>
-          <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
         </article>
       </Layout>
     )
-  }
-
-export async function getStaticPaths() {
-    const paths = getAllPostIds()
-    return {
-      paths,
-      fallback: false
-    }
-  }
-
-  export async function getStaticProps({ params }) {
-    const postData = await getPostData(params.id)
-    return {
-      props: {
-        postData
-      }
-    }
   }
