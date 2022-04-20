@@ -10,19 +10,6 @@ import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { useRouter } from "next/router";
 
 
-
-
-/*
-  export const getServerSideProps = async (ctx) => {
-    const doc = await db.collection("blogEntries").doc(ctx.query.id).get()
-    const dataP = doc.data()
-    if (!dataP) return { notFound: true };
-    return { 
-        props: { 
-            dataP 
-        }};
-  }
-*/
   
 
 export default function BlogPosts({ dataP , ID }) {
@@ -42,7 +29,7 @@ export default function BlogPosts({ dataP , ID }) {
     const router = useRouter();
     const { name } = router.query;
 
-    console.log(dataP);
+    //console.log(dataP);
 
     //execute on (Startup¿?)
     useEffect(() =>  {
@@ -100,7 +87,17 @@ export default function BlogPosts({ dataP , ID }) {
                             <ul className={utilStyles.list}>
                             
                             <li className={utilStyles.listItem} key={post.id}>
-                                <Link href={`/posts/${post.id}`}>
+                                <Link href={{
+                                        pathname:`posts/${post.id}`,
+                                        query: {
+                                            id:post.id,
+                                            title:post.Title,
+                                            content:post.Content,
+                                            date:post.date.toDate().toDateString()
+                                        }
+                                        }}
+                                        as={`posts/${post.id}`}
+                                        >
                                     <a>{post.Title}</a>
                                 </Link>
                                 <br />
